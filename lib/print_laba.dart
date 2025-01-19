@@ -58,7 +58,7 @@ Future<Uint8List> generateResume4(
 
   document.addPage(pw.Page(
       pageFormat: PdfPageFormat.a4,
-       margin: const pw.EdgeInsets.only(top: 16,bottom: 16,right: 16,left: 48),
+       margin: const pw.EdgeInsets.only(top: 16,bottom: 16,right: 16,left: 16),
       build: ((pw.Context context) {
         return pw.Container(
           decoration: pw.BoxDecoration(border: pw.Border.all()),
@@ -419,8 +419,7 @@ Future<Uint8List> generateResume4(
                                           style: light,
                                         ),
                                        pw. Text(
-                                           ( totalPendapatan+totalPengeluaran).isNegative? ("( ${Rupiah.format2(totalPendapatan +
-                                                totalPengeluaran)} )"):
+                                          
                                             Rupiah.format2(totalPendapatan +
                                                 totalPengeluaran),
                                             style: light)

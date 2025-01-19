@@ -7,7 +7,7 @@ class AppTheme {
   static ThemeData getAppThemeData() {
     return ThemeData(iconTheme: const IconThemeData(size: 19),
         fontFamily: 'FreeSans',cardTheme: CardTheme(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
-        useMaterial3: true,backgroundColor: Colors.grey.shade300,
+        useMaterial3: true,
         dialogBackgroundColor: Colors.white,
         dialogTheme: const DialogTheme(
           backgroundColor: Colors.white,

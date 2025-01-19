@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
 import 'package:cahaya/hpSidemenu.dart';
 
 import 'package:cahaya/login/login_screen.dart';
@@ -35,18 +34,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final FlutterLocalization localization = FlutterLocalization.instance;
-
-  @override
-  void initState() {
-    localization.init(
-      mapLocales: [
-        const MapLocale('id', {}),
-      ],
-      initLanguageCode: 'id',
-    );
-    super.initState();
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +42,7 @@ class _MyAppState extends State<MyApp> {
       home: const MyHomePage(title: ''),
       debugShowCheckedModeBanner: false,
       locale: const Locale('id'),
-      supportedLocales: localization.supportedLocales,
-      localizationsDelegates: localization.localizationsDelegates,
+      
       title: 'Cahaya Trans',
       theme: AppTheme.getAppThemeData(),
     );

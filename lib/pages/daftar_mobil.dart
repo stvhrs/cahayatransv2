@@ -67,7 +67,7 @@ loading = false;
               border: Border.all(
                   color: Theme.of(context).primaryColor.withOpacity(0.2),
                   width: 10,
-                  strokeAlign: StrokeAlign.center),
+                  strokeAlign: BorderSide.strokeAlignCenter),
               color: const Color.fromRGBO(244, 244, 252, 1),
               borderRadius: BorderRadius.circular(10)),
           width:double.infinity,

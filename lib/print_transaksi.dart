@@ -56,7 +56,7 @@ Future<Uint8List> printTransaksi(
   los(List<Transaksi> data) {
     document.addPage(pw.Page(
         pageFormat: PdfPageFormat.a4,
-         margin: const pw.EdgeInsets.only(top: 16,bottom: 16,right: 16,left: 48),
+         margin: const pw.EdgeInsets.only(top: 16,bottom: 16,right: 16,left: 16),
         build: ((pw.Context context) {
           return pw.Stack(alignment: pw.Alignment.center, children: [
             pw.Image(asu),

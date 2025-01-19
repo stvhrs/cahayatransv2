@@ -361,7 +361,7 @@ class _LaporanKasState extends State<LaporanKas> {
                                           "Rp.",
                                           style: light,
                                         ),
-                                        Text(Rupiah.format(saldoAwal),
+                                        Text(Rupiah.format2(saldoAwal),
                                             style: light)
                                       ]))),Expanded(flex: 3,child: SizedBox()),
                         ],
@@ -531,7 +531,7 @@ class _LaporanKasState extends State<LaporanKas> {
                                           "Rp.",
                                           style: light,
                                         ),
-                                        Text(Rupiah.format2(totalAdministrasi),
+                                        Text(Rupiah.formatTanpaKurung(totalAdministrasi),
                                             style: light)
                                       ]))),
                         ],
@@ -558,7 +558,7 @@ class _LaporanKasState extends State<LaporanKas> {
                                           "Rp.",
                                           style: light,
                                         ),
-                                        Text(Rupiah.format2(totalPerbaikan),
+                                        Text(Rupiah.formatTanpaKurung(totalPerbaikan),
                                             style: light)
                                       ]))),
                         ],
@@ -586,7 +586,7 @@ class _LaporanKasState extends State<LaporanKas> {
                                           "Rp.",
                                           style: light,
                                         ),
-                                        Text(Rupiah.format2(toalBeliUnit),
+                                        Text(Rupiah.formatTanpaKurung(toalBeliUnit),
                                             style: light)
                                       ]))),
                         ],
@@ -613,7 +613,7 @@ class _LaporanKasState extends State<LaporanKas> {
                                           "Rp.",
                                           style: light,
                                         ),
-                                        Text(Rupiah.format2(totalNotaBeli),
+                                        Text(Rupiah.formatTanpaKurung(totalNotaBeli),
                                             style: light)
                                       ]))),
                         ],
@@ -641,7 +641,7 @@ class _LaporanKasState extends State<LaporanKas> {
                                           "Rp.",
                                           style: light,
                                         ),
-                                        Text(Rupiah.format2(totalPengeluaran),
+                                        Text(Rupiah.formatTanpaKurung(totalPengeluaran),
                                             style: light)
                                       ]))),
                         ],
@@ -669,8 +669,7 @@ class _LaporanKasState extends State<LaporanKas> {
                                           "Rp.",
                                           style: light,
                                         ),
-                                        Text((totalPendapatan+totalPengeluaran).isNegative? ("( ${Rupiah.format2(totalPendapatan +
-                                                totalPengeluaran)} )"):
+                                        Text(
                                             Rupiah.format2(totalPendapatan +
                                                 totalPengeluaran),
                                             style: light)
@@ -700,7 +699,7 @@ class _LaporanKasState extends State<LaporanKas> {
                                           "Rp.",
                                           style: light,
                                         ),
-                                        Text(Rupiah.format(saldoAkhir),
+                                        Text(Rupiah.format2(saldoAkhir),
                                             style: light)
                                       ]))),Expanded(flex: 3,child: SizedBox()),
                         ],

@@ -32,7 +32,7 @@ const sep = 130.0;
 Future<Uint8List> generateResume3(
     PdfPageFormat format, List<HistorySaldo> as,double totalSaldo) async {
   final int panjang = as.length;
-  pw.TextStyle med = const pw.TextStyle(fontSize: 10);
+  pw.TextStyle med = const pw.TextStyle(fontSize: 8);
   DateTime dateTime = DateTime.parse(DateTime.now().toIso8601String());
   String yourDateTime = DateFormat('HH:mm dd-MM-yyyy').format(dateTime);
 
@@ -48,7 +48,7 @@ Future<Uint8List> generateResume3(
   los(List<HistorySaldo> data) {
     document.addPage(pw.Page(
         pageFormat: PdfPageFormat.a4,
-         margin: const pw.EdgeInsets.only(top: 16,bottom: 16,right: 16,left: 48),
+         margin: const pw.EdgeInsets.only(top: 16,bottom: 16,right: 16,left: 16),
         build: ((pw.Context context) {
           return pw.Stack(alignment: pw.Alignment.center, children: [
             pw.Image(asu),
@@ -92,13 +92,13 @@ Future<Uint8List> generateResume3(
                             child: pw.Row(
                               children: [
                                 pw.Expanded(
-                                    flex: 5,
+                                    flex: 3,
                                     child: pw.Text('Tanggal', style: bold)),
                                 pw.Expanded(
                                     flex: 5,
                                     child: pw.Text('Sumber', style: bold)),
                                 pw.Expanded(
-                                    flex: 5,
+                                    flex: 3,
                                     child: pw.Text('Detail', style: bold)),  pw.Expanded(
                                     flex: 4,
                                     child: pw.Text('Keterangan', style: bold)),
@@ -127,7 +127,7 @@ Future<Uint8List> generateResume3(
                                     ),
                                     child: pw.Row(children: [
                                       pw.Expanded(
-                                          flex: 5,
+                                          flex: 3,
                                           child: pw.Text(
                                             style: med,
                                             FormatTanggal.formatTanggal(
@@ -143,7 +143,7 @@ Future<Uint8List> generateResume3(
                                             element.sumber,
                                           )),
                                       pw.Expanded(
-                                          flex: 5,
+                                          flex: 3,
                                           child: pw.Text(
                                             style: med,
                                             textAlign: pw.TextAlign.left,
@@ -183,7 +183,7 @@ Future<Uint8List> generateResume3(
                     pw.Text(
                         style: med,
                         textAlign: pw.TextAlign.left,
-                        Rupiah.format(element.sisaSaldo),
+                        Rupiah.format2(element.sisaSaldo),
                       )
                     ],
                   ))),

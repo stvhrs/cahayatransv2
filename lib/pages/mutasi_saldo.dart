@@ -55,7 +55,7 @@ class _MutasiSaldoPageState extends State<MutasiSaldoPage> {
                 border: Border.all(
                     color: Theme.of(context).primaryColor.withOpacity(0.2),
                     width: 10,
-                    strokeAlign: StrokeAlign.center),
+                    strokeAlign: BorderSide.strokeAlignCenter),
                 color: const Color.fromRGBO(244, 244, 252,  1),
                 borderRadius: BorderRadius.circular(10)),
             // width: MediaQuery.of(context).size.width * 0.7,
@@ -135,7 +135,7 @@ class _MutasiSaldoPageState extends State<MutasiSaldoPage> {
                           child: Text('Sumber',
                               style:
                                   Theme.of(context).textTheme.displayMedium)),
-                      Expanded(flex: 5,
+                      Expanded(flex: 3,
                           child: Text('Detail',
                               style:
                                   Theme.of(context).textTheme.displayMedium)), Expanded(flex: 5,
@@ -146,7 +146,7 @@ class _MutasiSaldoPageState extends State<MutasiSaldoPage> {
                           child: Text('Nominal',
                               style:
                                   Theme.of(context).textTheme.displayMedium)),
-                      Expanded(flex: 7,
+                      Expanded(flex: 4,
                           child: Container(margin: EdgeInsets.only(right: 60),
                             child: Text(textAlign: TextAlign.right,'Riwayat Saldo',
                                 style: Theme.of(context).textTheme.displayMedium),
@@ -165,16 +165,16 @@ class _MutasiSaldoPageState extends State<MutasiSaldoPage> {
                                     : Colors.grey.shade200,
                                 padding:
                                     const EdgeInsets.only(left: 15, right: 15,top: 5,bottom: 5),
-                                child: Row(
-                                  children: [
-                                    Expanded(flex: 5,
-                                        child: Text(FormatTanggal.formatTanggal(
-                                            value.listHistorySaldo[index]
+                                  child: Row(
+                                    children: [
+                                      Expanded(flex: 5,
+                                          child: Text(FormatTanggal.formatTanggal(
+                                              value.listHistorySaldo[index]
                                                 .tanggal))),
                                     Expanded(flex: 5,
                                         child: Text(value
                                             .listHistorySaldo[index].sumber)),
-                                    Expanded(flex: 5,
+                                    Expanded(flex: 3,
                                         child: Text(value
                                             .listHistorySaldo[index].detail)), Expanded(flex: 5,
                                         child: Text(value
@@ -189,15 +189,14 @@ class _MutasiSaldoPageState extends State<MutasiSaldoPage> {
                                               .listHistorySaldo[index].harga))
                       ]),
                                         )),
-                                    Expanded(flex: 7,
+                                    Expanded(flex: 4,
                                         child: Container(margin: EdgeInsets.only(right: 60),
-                                          child: Text(textAlign: TextAlign.right,Provider.of<ProviderData>(context, listen: false)
+                                          child: Provider.of<ProviderData>(context, listen: false)
                                       .isOwner
-                                  ? Rupiah.format(value
+                                  ? Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [    Text("Rp."),Text(textAlign: TextAlign.right,Rupiah.format2(value
                                               .listHistorySaldo[index]
-                                              .sisaSaldo):"Rp.      xxxxxxxxx"),
-                                        )),
-                                  ],
+                                              .sisaSaldo))],):SizedBox(),
+                                ))],
                                 ),
                               ),
                             ))))
