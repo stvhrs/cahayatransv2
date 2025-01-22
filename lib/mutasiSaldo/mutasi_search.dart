@@ -41,7 +41,7 @@ class _SearchMutasiState extends State<SearchMutasi> {
                                   data: ThemeData(
                                     colorScheme:  ColorScheme.light(
                                     primary: Theme.of(context).primaryColor,
-                                      surface: const Color.fromARGB(255, 75, 84, 167),
+                                      surface: Colors.white,
                                     ),
 
                                     // Here I Chaged the overline to my Custom TextStyle.

@@ -18,22 +18,28 @@ class MutasiSaldoPage extends StatefulWidget {
 class _MutasiSaldoPageState extends State<MutasiSaldoPage> {
   @override
   void initState() {
-    Provider.of<ProviderData>(context, listen: false).startMutasi = null;
-    Provider.of<ProviderData>(context, listen: false).endMutasi = null;
+    // Provider.of<ProviderData>(context, listen: false).startMutasi = null;
+    // Provider.of<ProviderData>(context, listen: false).endMutasi = null;
 
-    Provider.of<ProviderData>(context, listen: false).start = null;
-    Provider.of<ProviderData>(context, listen: false).end = null;
-    Provider.of<ProviderData>(context, listen: false).searchsupir = '';
-    Provider.of<ProviderData>(context, listen: false).searchtujuan = '';
-    Provider.of<ProviderData>(context, listen: false).searchmobile = '';
+    // Provider.of<ProviderData>(context, listen: false).start = null;
+    // Provider.of<ProviderData>(context, listen: false).end = null;
+    // Provider.of<ProviderData>(context, listen: false).searchsupir = '';
+    // Provider.of<ProviderData>(context, listen: false).searchtujuan = '';
+    // Provider.of<ProviderData>(context, listen: false).searchmobile = '';
     
-    Provider.of<ProviderData>(context, listen: false).searchMobil('', false);
-    Provider.of<ProviderData>(context, listen: false).searchTransaksi("",false);
+    // Provider.of<ProviderData>(context, listen: false).searchMobil('', false);
+    // Provider.of<ProviderData>(context, listen: false).searchTransaksi("",false);
 
-    Provider.of<ProviderData>(context, listen: false).searchperbaikan('',false);
-    Provider.of<ProviderData>(context, listen: false).calculateSaldo();
+    // Provider.of<ProviderData>(context, listen: false).searchperbaikan('',false);
+       Provider.of<ProviderData>(context, listen: false).calculateSaldo();
 
-    Provider.of<ProviderData>(context, listen: false).calculateMutasi();
+         Provider.of<ProviderData>(context, listen: false).calculateMutasi();
+  
+
+ Provider.of<ProviderData>(context, listen: false).turnOffFilter(false);
+        Provider.of<ProviderData>(context, listen: false)
+        .searchTransaksi("", false);
+ 
     log('calucalte mutasi page');
  
 

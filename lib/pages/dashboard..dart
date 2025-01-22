@@ -191,19 +191,19 @@ double totalSisaBulanIni=0;
                   Container(
                     padding: const EdgeInsets.all(25.0),
                     height: MediaQuery.of(context).size.height * 0.6,
-                    child: DChartLine(
-                      areaColor: (lineData, index, id) => Colors.blue,
-                      includePoints: true,
-                      animate: true,
-                      includeArea: true,
-                      data: [
-                        {
-                          'id': 'Line',
-                          'data': grafik,
-                        },
-                      ],
-                      lineColor: (lineData, index, id) => Colors.green,
-                    ),
+                    // child: DChartLineN(
+                    //   areaColor: (lineData, index, id) => Colors.blue,
+                    //   includePoints: true,
+                    //   animate: true,
+                    //   includeArea: true,
+                    //   data: [
+                    //     {
+                    //       'id': 'Line',
+                    //       'data': grafik,
+                    //     },
+                    //   ],
+                    //   lineColor: (lineData, index, id) => Colors.green,
+                    // ),
                   ),
                 ],
               ),

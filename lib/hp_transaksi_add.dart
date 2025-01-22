@@ -8,9 +8,8 @@ import 'package:cahaya/providerData/providerData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cahaya/services/service.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:provider/provider.dart';
-import 'package:web_date_picker/web_date_picker.dart';
+import 'package:rounded_loading_button_plus/rounded_loading_button.dart';import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../helper/input_currency.dart';
 
@@ -251,19 +250,19 @@ listMobil.sort((a, b){ //sorting in ascending order
                                         _buildSize2(
                                             Padding(
                                               padding: const EdgeInsets.only(right: 30),
-                                              child:  WebDatePicker(
-                                                lastDate: DateTime.now(),
-                                                height: 28,
-                                                initialDate: DateTime.now(),
-                                                dateformat: 'dd/MM/yyyy',
-                                                onChange: (value) {
-                                                  if (value != null) {
+                                              child:  SfDateRangePicker(
+                    onSelectionChanged: (value){
+                   
+                          if (value != null) {
                                                     transaksi.tanggalBerangkat =
-                                                        value.toIso8601String();
+                                                        value.value.toString();
                                                     setState(() {});
                                                   }
-                                                },
-                                              ),
+                    },
+                    initialSelectedRange: PickerDateRange(
+                        DateTime.now().subtract(const Duration(days: 4)),
+                        DateTime.now().add(const Duration(days: 3))),
+                  ),
                                             ),
                                             'Tanggal',
                                             1),

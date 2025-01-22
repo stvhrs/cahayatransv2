@@ -45,6 +45,9 @@ class _KasTahunState extends State<KasTahun> {
   int ropdownValue2 = DateTime.now().year;
   @override
   void didChangeDependencies() {
+     Provider.of<ProviderData>(context, listen: false).turnOffFilter(false);
+        Provider.of<ProviderData>(context, listen: false)
+        .searchTransaksi("", false);
     for (var element in Provider.of<ProviderData>(context).listTransaksi) {
       if (!tahun.contains(DateTime.parse(element.tanggalBerangkat).year)) {
         tahun.add(DateTime.parse(element.tanggalBerangkat).year);

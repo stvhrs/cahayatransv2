@@ -10,21 +10,21 @@ class SearchMobil extends StatefulWidget {
 }
 
 class _SearchMobilState extends State<SearchMobil> {
+  String value='';
   @override
   Widget build(BuildContext context) {
     return Container(height: 36,
         margin: const EdgeInsets.only(left: 35),
         width: MediaQuery.of(context).size.width * 0.15,
-        child: TextFormField(
+        child: TextFormField(controller: context.read<ProviderData>().mobilConttoler,
                               style: const TextStyle(fontSize:13),textInputAction: TextInputAction.next,
           onChanged: (val) {
             Provider.of<ProviderData>(context, listen: false).searchmobile =
                 val;
-            Provider.of<ProviderData>(context, listen: false).searchTransaksi("",true);
+          value=val;
           },
-          decoration: const InputDecoration(
-            hintText: 'Mobil',
-          ),
+          decoration:  InputDecoration(
+            hintText: 'Mobil',)
         ));
   }
 }

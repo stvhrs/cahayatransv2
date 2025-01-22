@@ -37,23 +37,24 @@ class LaporanKas extends StatefulWidget {
 class _LaporanKasState extends State<LaporanKas> {
   @override
   void initState() {
-    Provider.of<ProviderData>(context, listen: false).startMutasi = null;
-    Provider.of<ProviderData>(context, listen: false).endMutasi = null;
+    // Provider.of<ProviderData>(context, listen: false).startMutasi = null;
+    // Provider.of<ProviderData>(context, listen: false).endMutasi = null;
 
-    Provider.of<ProviderData>(context, listen: false).start = null;
-    Provider.of<ProviderData>(context, listen: false).end = null;
-    Provider.of<ProviderData>(context, listen: false).searchsupir = '';
-    Provider.of<ProviderData>(context, listen: false).searchtujuan = '';
-    Provider.of<ProviderData>(context, listen: false).searchmobile = '';
-    Provider.of<ProviderData>(context, listen: false).searchMobil('', false);
-    Provider.of<ProviderData>(context, listen: false)
-        .searchTransaksi("", false);
-    Provider.of<ProviderData>(context, listen: false)
-        .searchperbaikan('', false);
-    Provider.of<ProviderData>(context, listen: false).calculateSaldo();
-    Provider.of<ProviderData>(context, listen: false).calculateMutasi();
+    // Provider.of<ProviderData>(context, listen: false).start = null;
+    // Provider.of<ProviderData>(context, listen: false).end = null;
+    // Provider.of<ProviderData>(context, listen: false).searchsupir = '';
+    // Provider.of<ProviderData>(context, listen: false).searchtujuan = '';
+    // Provider.of<ProviderData>(context, listen: false).searchmobile = '';
+    // Provider.of<ProviderData>(context, listen: false).searchMobil('', false);
+    // Provider.of<ProviderData>(context, listen: false)
+    //     .searchTransaksi("", false);
+    // Provider.of<ProviderData>(context, listen: false)
+    //     .searchperbaikan('', false);
+    //  Provider.of<ProviderData>(context, listen: false).calculateSaldo();
+
     //log(calucalte mutasi page');
-
+      Provider.of<ProviderData>(context, listen: false).calculateSaldo();
+      Provider.of<ProviderData>(context, listen: false).calculateMutasi();
     super.initState();
   }
 
@@ -93,79 +94,86 @@ class _LaporanKasState extends State<LaporanKas> {
   }
 
   test() {
-    try{
-    totalTransaksi = 0;
-    totalJualUnit = 0;
-    totalNotaBeli = 0;
-    totalPerbaikan = 0;
-    totalAdministrasi = 0;
-    toalBeliUnit = 0;
-    totalNotaJual = 0;
+    try {
+      totalTransaksi = 0;
+      totalJualUnit = 0;
+      totalNotaBeli = 0;
+      totalPerbaikan = 0;
+      totalAdministrasi = 0;
+      toalBeliUnit = 0;
+      totalNotaJual = 0;
 
-    totalPendapatan = 0;
-    totalPengeluaran = 0;
-    saldoAkhir = 0;
-    saldoAwal = 0;
-    List<HistorySaldo> range = [];
+      totalPendapatan = 0;
+      totalPengeluaran = 0;
+      saldoAkhir = 0;
+      saldoAwal = 0;
+      List<HistorySaldo> range = [];
 
-    List<Perbaikan> listPerbaikan = [];
-   if (dropdownValue != dropdownValue2) {
-      //log(beda');
-      range = Provider.of<ProviderData>(context, listen: false)
-          .listHistorySaldo
-          .where((element) =>
-              DateTime.parse(element.tanggal).isBefore(DateTime(
-                  ropdownValue2, list.indexOf(dropdownValue2) + 1,list.indexOf(dropdownValue2)==1?28: 31, 24)) &&
-              DateTime.parse(element.tanggal).isAfter(
-                  DateTime(ropdownValue2, list.indexOf(dropdownValue) + 1, 0)))
-          .toList();
-      saldoAwal = range.last.sisaSaldo;
-      saldoAkhir = range.first.harga + range.first.sisaSaldo;
-    } else if (dropdownValue == dropdownValue2) {
-      //log(sama');
-      range = Provider.of<ProviderData>(context, listen: false)
-          .listHistorySaldo
-          .where((element) =>
-              DateTime.parse(element.tanggal).isBefore(DateTime(
-                  ropdownValue2, list.indexOf(dropdownValue2) + 1, list.indexOf(dropdownValue2)==1?28: 31, 24)) &&
-              DateTime.parse(element.tanggal).isAfter(DateTime(
-                  ropdownValue2, list.indexOf(dropdownValue) + 1, 0, 0)))
-          .toList();
-      saldoAwal = range.last.sisaSaldo;
-      saldoAkhir = range.first.harga + range.first.sisaSaldo;
-    }
+      if (dropdownValue != dropdownValue2) {
+        //log(beda');
+        range = Provider.of<ProviderData>(context, listen: false)
+            .listHistorySaldo
+            .where((element) =>
+                DateTime.parse(element.tanggal).isBefore(DateTime(
+                    ropdownValue2,
+                    list.indexOf(dropdownValue2) + 1,
+                    list.indexOf(dropdownValue2) == 1 ? 28 : 31,
+                    24)) &&
+                DateTime.parse(element.tanggal).isAfter(DateTime(
+                    ropdownValue2, list.indexOf(dropdownValue) + 1, 0)))
+            .toList();
+        saldoAwal = range.last.sisaSaldo;
+        saldoAkhir = range.first.harga + range.first.sisaSaldo;
+      } else if (dropdownValue == dropdownValue2) {
+        //log(sama');
+        range = Provider.of<ProviderData>(context, listen: false)
+            .listHistorySaldo
+            .where((element) =>
+                DateTime.parse(element.tanggal).isBefore(DateTime(
+                    ropdownValue2,
+                    list.indexOf(dropdownValue2) + 1,
+                    list.indexOf(dropdownValue2) == 1 ? 28 : 31,
+                    24)) &&
+                DateTime.parse(element.tanggal).isAfter(DateTime(
+                    ropdownValue2, list.indexOf(dropdownValue) + 1, 0, 0)))
+            .toList();
+        saldoAwal = range.last.sisaSaldo;
+        saldoAkhir = range.first.harga + range.first.sisaSaldo;
+      }
 
-    for (var element in range) {
-      if (element.sumber == "Transaksi") {
-        totalTransaksi += element.harga;
-        totalPendapatan += element.harga;
-      }
-      if (element.sumber == "Jual Mobil") {
-        totalJualUnit += element.harga;
-        totalPendapatan += element.harga;
-      }
-      if (element.sumber == "Beli Mobil") {
-        totalPengeluaran += element.harga;
-        toalBeliUnit += element.harga;
-      }
-      if (element.sumber == "Nota Pemasukan") {
-        totalNotaJual += element.harga;
+      for (var element in range) {
+        if (element.sumber == "Transaksi") {
+          totalTransaksi += element.harga;
+          totalPendapatan += element.harga;
+        }
+        if (element.sumber == "Jual Mobil") {
+          totalJualUnit += element.harga;
+          totalPendapatan += element.harga;
+        }
+        if (element.sumber == "Beli Mobil") {
+          totalPengeluaran += element.harga;
+          toalBeliUnit += element.harga;
+        }
+        if (element.sumber == "Nota Pemasukan") {
+          totalNotaJual += element.harga;
 
-        totalPendapatan += element.harga;
+          totalPendapatan += element.harga;
+        }
+        if (element.sumber == "Nota Pengeluaran") {
+          totalPengeluaran += element.harga;
+          totalNotaBeli += element.harga;
+        }
+        if (element.sumber == "Perbaikan") {
+          totalPengeluaran += element.harga;
+          totalPerbaikan += element.harga;
+        }
+        if (element.sumber == "Administrasi") {
+          totalPengeluaran += element.harga;
+          totalAdministrasi += element.harga;
+        }
       }
-      if (element.sumber == "Nota Pengeluaran") {
-        totalPengeluaran += element.harga;
-        totalNotaBeli += element.harga;
-      }
-      if (element.sumber == "Perbaikan") {
-        totalPengeluaran += element.harga;
-        totalPerbaikan += element.harga;
-      }
-      if (element.sumber == "Administrasi") {
-        totalPengeluaran += element.harga;
-        totalAdministrasi += element.harga;
-      }
-    }}catch(e){};
+    } catch (e) {}
+    ;
   }
 
   @override
@@ -349,21 +357,23 @@ class _LaporanKasState extends State<LaporanKas> {
                               child: Text(
                                 "Saldo Awal",
                                 style: bold,
-                              )),Expanded(flex: 1,child: SizedBox()),
-                          Expanded(flex: 2,
+                              )),
+                          Expanded(flex: 1, child: SizedBox()),
+                          Expanded(
+                              flex: 2,
                               child: Container(
-                     
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          "Rp.",
-                                          style: light,
-                                        ),
-                                        Text(Rupiah.format2(saldoAwal),
-                                            style: light)
-                                      ]))),Expanded(flex: 3,child: SizedBox()),
+                                    Text(
+                                      "Rp.",
+                                      style: light,
+                                    ),
+                                    Text(Rupiah.format2(saldoAwal),
+                                        style: light)
+                                  ]))),
+                          Expanded(flex: 3, child: SizedBox()),
                         ],
                       ),
                     ),
@@ -384,59 +394,63 @@ class _LaporanKasState extends State<LaporanKas> {
                       color: Colors.grey.shade200,
                       padding: const EdgeInsets.all(4),
                       child: Row(
-                        children: [Expanded(flex: 1,child: SizedBox()),
+                        children: [
+                          Expanded(flex: 1, child: SizedBox()),
                           Expanded(
                               flex: 4,
                               child: Text(
                                 "Transaksi",
                                 style: bold,
                               )),
-                          Expanded(flex: 2,
+                          Expanded(
+                              flex: 2,
                               child: Container(
-                                 
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          "Rp.",
-                                          style: light,
+                                    Text(
+                                      "Rp.",
+                                      style: light,
+                                    ),
+                                    Text(
+                                        Rupiah.format2(
+                                          totalTransaksi,
                                         ),
-                                        Text(
-                                            Rupiah.format2(
-                                              totalTransaksi,
-                                            ),
-                                            style: light)
-                                      ]))),Expanded(flex: 3,child: SizedBox()),
+                                        style: light)
+                                  ]))),
+                          Expanded(flex: 3, child: SizedBox()),
                         ],
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(4),
                       child: Row(
-                        children: [Expanded(flex: 1,child: SizedBox()),
+                        children: [
+                          Expanded(flex: 1, child: SizedBox()),
                           Expanded(
                               flex: 4,
                               child: Text(
                                 "Jual Unit",
                                 style: bold,
                               )),
-                          Expanded(flex: 2,
+                          Expanded(
+                              flex: 2,
                               child: Container(
-                                
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          "Rp.",
-                                          style: light,
-                                        ),
-                                        Text(
-                                          Rupiah.format2(totalJualUnit),
-                                          style: light,
-                                        )
-                                      ]))),Expanded(flex: 3,child: SizedBox()),
+                                    Text(
+                                      "Rp.",
+                                      style: light,
+                                    ),
+                                    Text(
+                                      Rupiah.format2(totalJualUnit),
+                                      style: light,
+                                    )
+                                  ]))),
+                          Expanded(flex: 3, child: SizedBox()),
                         ],
                       ),
                     ),
@@ -444,27 +458,29 @@ class _LaporanKasState extends State<LaporanKas> {
                       color: Colors.grey.shade200,
                       padding: const EdgeInsets.all(4),
                       child: Row(
-                        children: [Expanded(flex: 1,child: SizedBox()),
+                        children: [
+                          Expanded(flex: 1, child: SizedBox()),
                           Expanded(
                               flex: 4,
                               child: Text(
                                 "Nota Pemasukan",
                                 style: bold,
                               )),
-                          Expanded(flex: 2,
+                          Expanded(
+                              flex: 2,
                               child: Container(
-                                
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          "Rp.",
-                                          style: light,
-                                        ),
-                                        Text(Rupiah.format2(totalNotaJual),
-                                            style: light)
-                                      ]))),Expanded(flex: 3,child: SizedBox()),
+                                    Text(
+                                      "Rp.",
+                                      style: light,
+                                    ),
+                                    Text(Rupiah.format2(totalNotaJual),
+                                        style: light)
+                                  ]))),
+                          Expanded(flex: 3, child: SizedBox()),
                         ],
                       ),
                     ),
@@ -478,21 +494,23 @@ class _LaporanKasState extends State<LaporanKas> {
                               child: Text(
                                 "Total Pemasukan",
                                 style: bold,
-                              )),Expanded(flex: 1,child: SizedBox()),
-                          Expanded(flex: 2,
+                              )),
+                          Expanded(flex: 1, child: SizedBox()),
+                          Expanded(
+                              flex: 2,
                               child: Container(
-                                 
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          "Rp.",
-                                          style: light,
-                                        ),
-                                        Text(Rupiah.format2(totalPendapatan),
-                                            style: light)
-                                      ]))),Expanded(flex: 3,child: SizedBox()),
+                                    Text(
+                                      "Rp.",
+                                      style: light,
+                                    ),
+                                    Text(Rupiah.format2(totalPendapatan),
+                                        style: light)
+                                  ]))),
+                          Expanded(flex: 3, child: SizedBox()),
                         ],
                       ),
                     ),
@@ -513,54 +531,62 @@ class _LaporanKasState extends State<LaporanKas> {
                       color: Colors.grey.shade200,
                       padding: const EdgeInsets.all(4),
                       child: Row(
-                        children: [Expanded(flex: 1,child: SizedBox()),
+                        children: [
+                          Expanded(flex: 1, child: SizedBox()),
                           Expanded(
                               flex: 3,
                               child: Text(
                                 "Administrasi",
                                 style: bold,
-                              )),Expanded(flex: 4,child: SizedBox()),
-                          Expanded(flex: 2,
+                              )),
+                          Expanded(flex: 4, child: SizedBox()),
+                          Expanded(
+                              flex: 2,
                               child: Container(
-                                  
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          "Rp.",
-                                          style: light,
-                                        ),
-                                        Text(Rupiah.formatTanpaKurung(totalAdministrasi),
-                                            style: light)
-                                      ]))),
+                                    Text(
+                                      "Rp.",
+                                      style: light,
+                                    ),
+                                    Text(
+                                        Rupiah.formatTanpaKurung(
+                                            totalAdministrasi),
+                                        style: light)
+                                  ]))),
                         ],
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(4),
                       child: Row(
-                        children: [Expanded(flex: 1,child: SizedBox()),
+                        children: [
+                          Expanded(flex: 1, child: SizedBox()),
                           Expanded(
                               flex: 3,
                               child: Text(
                                 "Perbaikan",
                                 style: bold,
-                              )),Expanded(flex: 4,child: SizedBox()),
-                          Expanded(flex: 2,
+                              )),
+                          Expanded(flex: 4, child: SizedBox()),
+                          Expanded(
+                              flex: 2,
                               child: Container(
-                                  
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          "Rp.",
-                                          style: light,
-                                        ),
-                                        Text(Rupiah.formatTanpaKurung(totalPerbaikan),
-                                            style: light)
-                                      ]))),
+                                    Text(
+                                      "Rp.",
+                                      style: light,
+                                    ),
+                                    Text(
+                                        Rupiah.formatTanpaKurung(
+                                            totalPerbaikan),
+                                        style: light)
+                                  ]))),
                         ],
                       ),
                     ),
@@ -568,54 +594,59 @@ class _LaporanKasState extends State<LaporanKas> {
                       color: Colors.grey.shade200,
                       padding: const EdgeInsets.all(4),
                       child: Row(
-                        children: [Expanded(flex: 1,child: SizedBox()),
+                        children: [
+                          Expanded(flex: 1, child: SizedBox()),
                           Expanded(
                               flex: 3,
                               child: Text(
                                 "Beli Unit",
                                 style: bold,
-                              )),Expanded(flex: 4,child: SizedBox()),
-                          Expanded(flex: 2,
+                              )),
+                          Expanded(flex: 4, child: SizedBox()),
+                          Expanded(
+                              flex: 2,
                               child: Container(
-                                  
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          "Rp.",
-                                          style: light,
-                                        ),
-                                        Text(Rupiah.formatTanpaKurung(toalBeliUnit),
-                                            style: light)
-                                      ]))),
+                                    Text(
+                                      "Rp.",
+                                      style: light,
+                                    ),
+                                    Text(Rupiah.formatTanpaKurung(toalBeliUnit),
+                                        style: light)
+                                  ]))),
                         ],
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(4),
                       child: Row(
-                        children: [Expanded(flex: 1,child: SizedBox()),
+                        children: [
+                          Expanded(flex: 1, child: SizedBox()),
                           Expanded(
                               flex: 3,
                               child: Text(
                                 "Nota Pengeluaran",
                                 style: bold,
-                              )),Expanded(flex: 4,child: SizedBox()),
-                          Expanded(flex: 2,
+                              )),
+                          Expanded(flex: 4, child: SizedBox()),
+                          Expanded(
+                              flex: 2,
                               child: Container(
-                                  
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          "Rp.",
-                                          style: light,
-                                        ),
-                                        Text(Rupiah.formatTanpaKurung(totalNotaBeli),
-                                            style: light)
-                                      ]))),
+                                    Text(
+                                      "Rp.",
+                                      style: light,
+                                    ),
+                                    Text(
+                                        Rupiah.formatTanpaKurung(totalNotaBeli),
+                                        style: light)
+                                  ]))),
                         ],
                       ),
                     ),
@@ -632,18 +663,17 @@ class _LaporanKasState extends State<LaporanKas> {
                               )),
                           Expanded(
                               child: Container(
-                                  
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          "Rp.",
-                                          style: light,
-                                        ),
-                                        Text(Rupiah.formatTanpaKurung(totalPengeluaran),
-                                            style: light)
-                                      ]))),
+                                Text(
+                                  "Rp.",
+                                  style: light,
+                                ),
+                                Text(Rupiah.formatTanpaKurung(totalPengeluaran),
+                                    style: light)
+                              ]))),
                         ],
                       ),
                     ),
@@ -657,23 +687,25 @@ class _LaporanKasState extends State<LaporanKas> {
                               child: Text(
                                 "Laba Rugi",
                                 style: bold,
-                              )),Expanded(flex: 1,child: SizedBox()),
-                          Expanded(flex: 2,
+                              )),
+                          Expanded(flex: 1, child: SizedBox()),
+                          Expanded(
+                              flex: 2,
                               child: Container(
-                    
                                   child: Row(
-                                      mainAxisAlignment:  
+                                      mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          "Rp.",
-                                          style: light,
-                                        ),
-                                        Text(
-                                            Rupiah.format2(totalPendapatan +
-                                                totalPengeluaran),
-                                            style: light)
-                                      ]))),Expanded(flex: 3,child: SizedBox()),
+                                    Text(
+                                      "Rp.",
+                                      style: light,
+                                    ),
+                                    Text(
+                                        Rupiah.format2(
+                                            totalPendapatan + totalPengeluaran),
+                                        style: light)
+                                  ]))),
+                          Expanded(flex: 3, child: SizedBox()),
                         ],
                       ),
                     ),
@@ -687,21 +719,23 @@ class _LaporanKasState extends State<LaporanKas> {
                               child: Text(
                                 "Saldo Akhir",
                                 style: bold,
-                              )),Expanded(flex: 1,child: SizedBox()),
-                          Expanded(flex: 2,
+                              )),
+                          Expanded(flex: 1, child: SizedBox()),
+                          Expanded(
+                              flex: 2,
                               child: Container(
-                                
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          "Rp.",
-                                          style: light,
-                                        ),
-                                        Text(Rupiah.format2(saldoAkhir),
-                                            style: light)
-                                      ]))),Expanded(flex: 3,child: SizedBox()),
+                                    Text(
+                                      "Rp.",
+                                      style: light,
+                                    ),
+                                    Text(Rupiah.format2(saldoAkhir),
+                                        style: light)
+                                  ]))),
+                          Expanded(flex: 3, child: SizedBox()),
                         ],
                       ),
                     ),

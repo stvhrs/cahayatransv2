@@ -11,11 +11,13 @@ State<SearchTanggal> createState() => _SearchTanggalState();
 
 
 class _SearchTanggalState extends State<SearchTanggal> {
-  String _selecteRange = 'Pilih Rentang';
   DateTimeRange? picked;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(height: 36,
+  var prov  =  context.watch<ProviderData>();
+    return 
+    
+    SizedBox(height: 36,
       child: Card(
         color: Colors.grey.shade200,
         child: Padding(
@@ -26,7 +28,7 @@ class _SearchTanggalState extends State<SearchTanggal> {
               const Icon(Icons.date_range_rounded,size: 18),
               InkWell(
                 child: Text(
-                  _selecteRange,
+                   prov.rentangTransaksi,
                 ),
                 onTap: () async {
                   dateTimeRangePicker() async {
@@ -44,7 +46,7 @@ class _SearchTanggalState extends State<SearchTanggal> {
                                     data: ThemeData(
                                       colorScheme: ColorScheme.light(
                                         primary: Theme.of(context).primaryColor,
-                                        surface: const Color.fromARGB(255, 75, 84, 167),
+                                        surface: Colors.white,
                                       ),
 
                                       // Here I Chaged the overline to my Custom TextStyle.
@@ -60,7 +62,8 @@ class _SearchTanggalState extends State<SearchTanggal> {
                         });
            
                     if (picked != null) {
-                      _selecteRange = FormatTanggal.formatTanggal(
+                                         context.read<ProviderData>().rentangTransaksi
+ = FormatTanggal.formatTanggal(
                               picked!.start.toIso8601String()) +
                           ' - ' +
                           FormatTanggal.formatTanggal(
@@ -69,8 +72,7 @@ class _SearchTanggalState extends State<SearchTanggal> {
                           picked!.start;
                       Provider.of<ProviderData>(context, listen: false).end =
                           picked!.end;
-                      Provider.of<ProviderData>(context, listen: false)
-                          .searchTransaksi("",true);
+                     
                       setState(() {});
                     }
 
@@ -79,18 +81,18 @@ class _SearchTanggalState extends State<SearchTanggal> {
                   dateTimeRangePicker();
                 },
               ),
-              _selecteRange == 'Pilih Rentang'
+                               prov.rentangTransaksi
+ == 'Pilih Rentang'
                   ? IconButton(onPressed: (){}, icon: const Icon(Icons.r_mobiledata,color: Colors.transparent,))
                   : IconButton(
                       onPressed: () {
                         picked = null;
-                        _selecteRange = 'Pilih Rentang';
+                         context.read<ProviderData>().rentangTransaksi = 'Pilih Rentang';
                         Provider.of<ProviderData>(context, listen: false).start =
                             null;
                         Provider.of<ProviderData>(context, listen: false).end =
                             null;
-                        Provider.of<ProviderData>(context, listen: false)
-                            .searchTransaksi("",true);
+                       
                         setState(() {});
                       },
                       icon: const Icon(

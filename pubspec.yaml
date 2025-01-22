@@ -39,14 +39,13 @@ dependencies:
   http: any
   easy_sidemenu: any
   intl: any
-  web_date_picker: any
   provider: any
-  rounded_loading_button: any
+  rounded_loading_button_plus: any
  
   shared_preferences: any
   auto_size_text: any
 
-  printing: any
+  printing: ^5.13.4
 
   pdf: any
 
@@ -55,8 +54,11 @@ dependencies:
 
   d_chart: any
 
-  calendar_date_picker2: any
   dropdown_button2: any
+  syncfusion_flutter_datepicker: ^21.2.3
+  flutter_localization: ^0.3.1
+  data_table_2: ^2.5.18
+  vph_web_date_picker: ^0.1.2
 
 
 dev_dependencies:

@@ -10,21 +10,24 @@ class SearchTujuan extends StatefulWidget {
 }
 
 class _SearchTujuanState extends State<SearchTujuan> {
+  String value='';
+
   @override
   Widget build(BuildContext context) {
     return Container(height: 36,
         margin: const EdgeInsets.only(left: 35),
         width: MediaQuery.of(context).size.width * 0.15,
-        child: TextFormField(
+        child: TextFormField(controller: context.read<ProviderData>().tujuanConttoler,
                               style: const TextStyle(fontSize:13),textInputAction: TextInputAction.next,
           onChanged: (val) {
             Provider.of<ProviderData>(context, listen: false).searchtujuan =
                 val;
-            Provider.of<ProviderData>(context, listen: false).searchTransaksi("",true);
+          value=val;
+           
           },
-          decoration: const InputDecoration(
+          decoration:  InputDecoration(
             hintText: 'Tujuan',
-          ),
+          ) 
         ));
   }
 }

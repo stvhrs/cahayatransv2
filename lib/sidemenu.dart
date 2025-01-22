@@ -106,6 +106,7 @@ class _DashBoardState extends State<DashBoard> {
           listPerbaikan,
           listJualBeliMobil,
           listMutasiSaldo);
+              Provider.of<ProviderData>(context, listen: false).calculateMutasi();
       sideMenu.addListener((p0) {
         page.jumpToPage(p0);
       });

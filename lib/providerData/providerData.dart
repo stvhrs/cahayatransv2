@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:cahaya/models/history_saldo.dart';
@@ -30,7 +31,7 @@ List<String> list = <String>[
 class ProviderData with ChangeNotifier {
   late bool isOwner;
   bool logined = false;
-late User user;
+  late User user;
   List<Transaksi> backupTransaksi = [];
   List<Transaksi> listTransaksi = [];
 
@@ -53,14 +54,14 @@ late User user;
 
   double totalSaldo = 0;
   List<User> listUser = [];
-    List<MutasiSaldo> backupListMutasiSaldo = [];
+  List<MutasiSaldo> backupListMutasiSaldo = [];
 
-List<KeuanganBulanan> printedBulanan=[];
-DateTime? startTl;
+  List<KeuanganBulanan> printedBulanan = [];
+  DateTime? startTl;
   DateTime? endTl;
-   void sortTransaksiLain() {
-  listMutasiSaldo.clear();
-    
+  void sortTransaksiLain() {
+    listMutasiSaldo.clear();
+
     for (var element in backupListMutasiSaldo) {
       bool skipped = false;
 
@@ -69,21 +70,19 @@ DateTime? startTl;
             DateTime.parse(element.tanggal).isAfter(endTl!)) {
           skipped = true;
         }
-
       }
-      if(!skipped){
+      if (!skipped) {
         listMutasiSaldo.add(element);
       }
-
-    
     }
     notifyListeners();
   }
-DateTime? startp;
+
+  DateTime? startp;
   DateTime? endp;
-   void sortp() {
-  listPerbaikan.clear();
-    
+  void sortp() {
+    listPerbaikan.clear();
+
     for (var element in backupListPerbaikan) {
       bool skipped = false;
 
@@ -92,16 +91,14 @@ DateTime? startp;
             DateTime.parse(element.tanggal).isAfter(endp!)) {
           skipped = true;
         }
-
       }
-      if(!skipped){
+      if (!skipped) {
         listPerbaikan.add(element);
       }
-
-    
     }
     notifyListeners();
   }
+
   void owner() {
     isOwner = true;
     notifyListeners();
@@ -150,10 +147,13 @@ DateTime? startp;
       backupListPerbaikan.addAll(perbaikan);
     }
     if (tras.isNotEmpty) {
+      tras.sort(( ((a, b) => DateTime.parse(b.tanggalBerangkat)
+        .compareTo(DateTime.parse(a.tanggalBerangkat)))));
       listTransaksi.clear();
       backupTransaksi.clear();
       listTransaksi.addAll(tras);
       backupTransaksi.addAll(tras);
+ 
     }
     if (mobilData.isNotEmpty) {
       listMobil.clear();
@@ -181,43 +181,37 @@ DateTime? startp;
 
   void calculateSaldo() {
     totalSaldo = 0;
-    listTransaksi.every((e) {
+    for (var e in listTransaksi) {
       totalSaldo += e.sisa;
-      return true;
-    });
-
-    listPerbaikan.every((e) {
+    }
+    for (var e in listPerbaikan) {
       totalSaldo -= e.harga;
-      return true;
-    });
+    }
 
-    listJualBeliMobil.every((e) {
+    for (var e in listJualBeliMobil) {
       if (e.beli) {
         totalSaldo -= e.harga;
       } else {
         totalSaldo += e.harga;
       }
-
-      return true;
-    });
-
-    listMutasiSaldo.every((e) {
+    }
+    for (var e in listMutasiSaldo) {
       if (e.pendapatan) {
         totalSaldo += e.harga;
       } else {
         totalSaldo -= e.harga;
       }
-      return true;
-    });
+    }
+
     //  notifyListeners();
   }
 
   void calculateMutasi() {
     listHistorySaldo.clear();
     backupListHistorySaldo.clear();
-    listTransaksi.every((e) {
-      listHistorySaldo.add(HistorySaldo(
-          'Transaksi', 0, e.mobil, e.keterangan,e.sisa, e.tanggalBerangkat, true));
+    backupTransaksi.every((e) {
+      listHistorySaldo.add(HistorySaldo('Transaksi', 0, e.mobil, e.keterangan,
+          e.sisa, e.tanggalBerangkat, true));
       return true;
     });
 
@@ -225,7 +219,8 @@ DateTime? startp;
       listHistorySaldo.add(HistorySaldo(
           e.adminitrasi ? "Administrasi" : 'Perbaikan',
           0,
-          e.mobil,e.keterangan,
+          e.mobil,
+          e.keterangan,
           -e.harga,
           e.tanggal,
           false));
@@ -234,11 +229,11 @@ DateTime? startp;
 
     listJualBeliMobil.every((e) {
       if (e.beli) {
-        listHistorySaldo.add(
-            HistorySaldo('Beli Mobil', 0, e.mobil, e.keterangan,-e.harga, e.tanggal, false));
+        listHistorySaldo.add(HistorySaldo('Beli Mobil', 0, e.mobil,
+            e.keterangan, -e.harga, e.tanggal, false));
       } else {
-        listHistorySaldo.add(
-            HistorySaldo('Jual Mobil', 0, e.mobil,e.keterangan, e.harga, e.tanggal, true));
+        listHistorySaldo.add(HistorySaldo(
+            'Jual Mobil', 0, e.mobil, e.keterangan, e.harga, e.tanggal, true));
       }
 
       return true;
@@ -246,11 +241,11 @@ DateTime? startp;
 
     listMutasiSaldo.every((e) {
       if (e.pendapatan) {
-        listHistorySaldo.add(HistorySaldo(
-            'Nota Pemasukan', 0, e.nota,e.keterangan, e.harga, e.tanggal, true));
+        listHistorySaldo.add(HistorySaldo('Nota Pemasukan', 0, e.nota,
+            e.keterangan, e.harga, e.tanggal, true));
       } else {
-        listHistorySaldo.add(HistorySaldo(
-            'Nota Pengeluaran', 0, e.nota,e.keterangan, -e.harga, e.tanggal, false));
+        listHistorySaldo.add(HistorySaldo('Nota Pengeluaran', 0, e.nota,
+            e.keterangan, -e.harga, e.tanggal, false));
       }
       return true;
     });
@@ -268,13 +263,13 @@ DateTime? startp;
 
       listHistorySaldo[i].sisaSaldo =
           incrementMutasi -= listHistorySaldo[i].harga;
-      
 
       // if (i == 0) {
       //   listHistorySaldo[0].sisaSaldo = totalSaldo;
       // }
     }
     //  notifyListeners();
+    calculateSaldo();
   }
 
   void addmutasi(MutasiSaldo mutasi) {
@@ -413,11 +408,10 @@ DateTime? startp;
   }
 
   void addTransaksi(Transaksi transaksi) {
-    listTransaksi.add(transaksi);
-    backupTransaksi.add(transaksi);
-    // searchTransaksi("",false);
+    listTransaksi.insert(0,transaksi);
+    backupTransaksi.insert(0,transaksi);
 
-    // calculateSaldo();
+ 
     notifyListeners();
   }
 
@@ -432,27 +426,25 @@ DateTime? startp;
   }
 
   void updateTransaksi(Transaksi transaksi) {
-    listTransaksi.sort((a, b) => DateTime.parse(b.tanggalBerangkat)
-                .compareTo(DateTime.parse(a.tanggalBerangkat)));
-  //   log(transaksi.id);
-  //  log( listTransaksi.first.id);
-  //  log( listTransaksi.last.id);
+    //   log(transaksi.id);
+    //  log( listTransaksi.first.id);
+    //  log( listTransaksi.last.id);
 
- 
     try {
       int data =
           listTransaksi.indexWhere((element) => element.id == transaksi.id);
       listTransaksi[data] = transaksi;
-       searchTransaksi("", false);
       notifyListeners();
-     
-    } catch (e) {
-      log(e.toString());
-    }
+    } catch (e) {}
 
     //  searchTransaksi("",false);
   }
 
+  TextEditingController mobilConttoler = TextEditingController();
+  TextEditingController superConttoler = TextEditingController();
+  TextEditingController tujuanConttoler = TextEditingController();
+
+  String rentangTransaksi = "Pilih Rentang";
   String searchmobile = '';
   String searchsupir = '';
   String searchtujuan = '';
@@ -481,55 +473,111 @@ DateTime? startp;
     notifyListeners();
   }
 
+  bool filtered = false;
+  turnOffFilter(bool listen) {
+    filtered = false;
+    totalTarif = 0;
+    totalKeluar = 0;
+    totalSisa = 0;
+    // backupTransaksi.sort((a, b) => DateTime.parse(b.tanggalBerangkat)
+    //     .compareTo(DateTime.parse(a.tanggalBerangkat)));
+    for (var element in backupTransaksi) {
+      totalTarif += element.ongkos;
+      totalKeluar += element.keluar;
+      totalSisa += element.sisa;
+      superConttoler.clear();
+      mobilConttoler.clear();
+      tujuanConttoler.clear();
+      rentangTransaksi = "Pilih Rentang";
+      start = null;
+      end = null;
+
+      searchmobile = '';
+      searchsupir = '';
+      searchtujuan = '';
+    }
+    if (listen) notifyListeners();
+  }
+
+  double totalTarif = 0;
+  double totalKeluar = 0;
+  double totalSisa = 0;
   void searchTransaksi(String val, bool listen) {
     if (val.isEmpty) {
-      listTransaksi.clear();
-      listTransaksi.addAll(backupTransaksi);
-    }
-    listTransaksi.clear();
-    for (Transaksi data in backupTransaksi) {
-      refres();
-      bool skipped = false;
+      filtered = false;
+     
+      listTransaksi
+        ..clear()
+        ..addAll(backupTransaksi);
+      totalTarif = 0;
+      totalKeluar = 0;
+      totalSisa = 0;
 
+      for (var element in listTransaksi) {
+        totalTarif += element.ongkos;
+        totalKeluar += element.keluar;
+        totalSisa += element.sisa;
+      }
+
+      if (listen) notifyListeners();
+      return;
+    }
+
+    filtered = true;
+
+    listTransaksi = backupTransaksi.where((data) {
+      // Optimize date parsing by handling it outside the loop if needed
+      DateTime? tanggalBerangkat;
+      if (start != null) {
+        tanggalBerangkat = DateTime.parse(data.tanggalBerangkat);
+      }
+
+      // Apply filters
       if (searchmobile.isNotEmpty &&
           !data.mobil.toLowerCase().startsWith(searchmobile.toLowerCase())) {
-        skipped = true;
+        return false;
       }
       if (searchsupir.isNotEmpty &&
           !data.supir.toLowerCase().startsWith(searchsupir.toLowerCase())) {
-        skipped = true;
+        return false;
       }
       if (searchtujuan.isNotEmpty &&
           !data.tujuan.toLowerCase().startsWith(searchtujuan.toLowerCase())) {
-        skipped = true;
+        return false;
       }
-      if (start != null) {
-        if (DateTime.parse(data.tanggalBerangkat).isBefore(start!) ||
-            DateTime.parse(data.tanggalBerangkat).isAfter(end!)) {
-          skipped = true;
-        }
+      if (start != null &&
+          (tanggalBerangkat!.isBefore(start!) ||
+              tanggalBerangkat.isAfter(end!))) {
+        return false;
       }
       if (searchPerbaikan) {
-        skipped = true;
+        return false;
       }
+      totalTarif = 0;
+      totalKeluar = 0;
+      totalSisa = 0;
 
-      if (!skipped) {
-        listTransaksi.add(data);
+      for (var element in listTransaksi) {
+        totalTarif += element.ongkos;
+        totalKeluar += element.keluar;
+        totalSisa += element.sisa;
       }
-    }
-    listen ? notifyListeners() : '';
+      return true;
+    }).toList();
+
+    filtered = true;
+    if (listen) notifyListeners();
   }
 
   refres() {
     for (Transaksi data in backupTransaksi) {
-
-
-      data.keterangan_mobill = backupListMobil
-          .firstWhere((element) => element.id == data.id_mobil,orElse: () {
-            //log(errot");
-            return backupListMobil[0];
-          },)
-          .keterangan_mobill;
+      data.keterangan_mobill = backupListMobil.firstWhere(
+        (element) => element.id == data.id_mobil,
+        orElse: () {
+          //log(errot");
+          return backupListMobil[0];
+        },
+      ).keterangan_mobill;
     }
   }
 

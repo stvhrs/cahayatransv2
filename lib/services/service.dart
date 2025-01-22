@@ -44,6 +44,7 @@ class Service {
 
       for (Map<String, dynamic> te in json.decode(response.body)) {
         data.add(Transaksi.fromMap(te));
+          
       }
 
       return data;

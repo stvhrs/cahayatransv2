@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:cahaya/hpSidemenu.dart';
 
 import 'package:cahaya/login/login_screen.dart';
@@ -9,6 +10,7 @@ import 'package:cahaya/providerData/providerData.dart';
 import 'package:cahaya/services/service.dart';
 import 'package:cahaya/sidemenu.dart';
 import 'package:cahaya/styles/theme.dart';
+import 'package:intl/find_locale.dart';
 import 'package:provider/provider.dart';
 import 'package:cahaya/helper/custompaint.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,7 +19,8 @@ import 'models/user.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-//  await findSystemLocale();
+      await FlutterLocalization.instance.ensureInitialized();
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => ProviderData()),
@@ -34,18 +37,32 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  
+  final FlutterLocalization localization = FlutterLocalization.instance;
+
+  @override
+  void initState() {
+    localization.init(
+      mapLocales: [
+        const MapLocale('id', {}),
+      ],
+      initLanguageCode: 'id',
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1)),
+      child: MaterialApp(
       home: const MyHomePage(title: ''),
       debugShowCheckedModeBanner: false,
       locale: const Locale('id'),
-      
+      supportedLocales: localization.supportedLocales,
+      localizationsDelegates: localization.localizationsDelegates,
       title: 'Cahaya Trans',
       theme: AppTheme.getAppThemeData(),
-    );
+    ));
   }
 }
 
