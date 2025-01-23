@@ -175,6 +175,9 @@ class TransaksiEdit extends StatelessWidget {
                                           if (value != null) {
                                             transaksi.tanggalBerangkat =
                                                 value.toIso8601String();
+                                                setState(() {
+                                                  
+                                                },);
                                           }
                                         },
                                       ),
