@@ -38,11 +38,14 @@ class _TransaksiPageState extends State<TransaksiPage> {
 // await Service.postSupir();
 // await Service.deleteSupir();
 // await Service.test3();
-    Provider.of<ProviderData>(context, listen: false).filtered = false;
+  Provider.of<ProviderData>(
+                                                            context,
+                                                            listen: false)
+                                                        .turnOffFilter(true);
 
-    // listTransaksi = await Service.getAllTransaksi();
-    Provider.of<ProviderData>(context, listen: false)
-        .searchTransaksi("", false);
+     listTransaksi = await Service.getAllTransaksi();
+    // Provider.of<ProviderData>(context, listen: false)
+    //     .searchTransaksi("", false);
     // Provider.of<ProviderData>(context, listen: false)
     //     .setData([], listTransaksi, false, [], [], [], [], []);
 
