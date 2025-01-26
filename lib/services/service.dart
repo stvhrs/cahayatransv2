@@ -106,6 +106,14 @@ class Service {
     );
     for (Map<String, dynamic> element in json.decode(response.body)) {
       data.add(Perbaikan.fromMap(element));
+      // if(element["administrasi"].toString().isEmpty){
+      //   element["administrasi"]="false";
+      //  await updatePerbaikan(element);
+      // }
+      //   if(element["ket_p"].toString().toLowerCase().contains("SERVICE")){
+      //   element["administrasi"]="false";
+      // await  updatePerbaikan(element);
+      // }
     }
     return data;
   }

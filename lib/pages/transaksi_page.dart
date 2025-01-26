@@ -221,7 +221,7 @@ class _TransaksiPageState extends State<TransaksiPage> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Expanded(
-                                            flex: 4,
+                                            flex: 3,
                                             child: SizedBox(),
                                           ),
                                           Expanded(
@@ -248,7 +248,7 @@ class _TransaksiPageState extends State<TransaksiPage> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Expanded(
-                                            flex: 4,
+                                            flex: 3,
                                             child: SizedBox(),
                                           ),
                                           Expanded(
@@ -273,7 +273,7 @@ class _TransaksiPageState extends State<TransaksiPage> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Expanded(
-                                            flex: 4,
+                                            flex: 3,
                                             child: SizedBox(),
                                           ),
                                           Expanded(
