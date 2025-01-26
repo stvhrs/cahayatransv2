@@ -23,6 +23,6 @@ class Perbaikan {
         data['jenis_p'],
         double.parse(data['harga_p']),
         data['tgl_p'],
-        data['ket_p'],data['administrasi']=="true");
+        data['ket_p'],data['administrasi']=="false"?false:true);
   }
 }

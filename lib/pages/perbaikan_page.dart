@@ -26,7 +26,6 @@ class PerbaikanPage extends StatefulWidget {
 
 class _PerbaikanPageState extends State<PerbaikanPage> {
   late List<Perbaikan> listTransaksi;
-List<Perbaikan> data=[];
   bool loading = true;
   initData() async {
 //    test=      await Service.test2();
@@ -67,7 +66,10 @@ List<Perbaikan> data=[];
             child: CustomPaints(),
           )
         : Consumer<ProviderData>(builder: (context, c, h) {
+          List<Perbaikan> data=c.listPerbaikan;
+
             data = c.listPerbaikan
+
                 .where((element) => element.adminitrasi == false)
                 .toList();
             data.sort((a, b) =>
@@ -209,7 +211,7 @@ List<Perbaikan> data=[];
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.7,
                           child: ListView.builder(
-                            itemCount: data.toList().length,
+                            itemCount: data.length,primary: true,
                             itemBuilder: (context, index) => InkWell(
                               child: Container(
                                 color: index.isEven

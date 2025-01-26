@@ -399,10 +399,13 @@ class ProviderData with ChangeNotifier {
     notifyListeners();
   }
 
-  void updatePerbaikan(Perbaikan Perbaikan) {
+  void updatePerbaikan(Perbaikan perbaikan) {
     int data =
-        listPerbaikan.indexWhere((element) => (element.id) == (Perbaikan.id));
-    listPerbaikan[data] = Perbaikan;
+        listPerbaikan.indexWhere((element) => (element.id) == (perbaikan.id));
+    listPerbaikan[data] = perbaikan;
+     int data2 =
+        backupListPerbaikan.indexWhere((element) => (element.id) == (perbaikan.id));
+    backupListPerbaikan [data2] = perbaikan;
     searchperbaikan('', false);
     notifyListeners();
   }

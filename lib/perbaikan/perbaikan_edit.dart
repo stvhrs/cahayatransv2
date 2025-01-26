@@ -241,7 +241,7 @@ class _PerbaikanEditState extends State<PerbaikanEdit> {
                                     "ket_mobil":perbaikan.keterangan,
                                     "jenis_p": perbaikan.jenis,
                                     "harga_p": perbaikan.harga.toString(),
-                                    "ket_p": perbaikan.keterangan,
+                                    "ket_p": perbaikan.keterangan,"administrasi":"false",
                                     "tgl_p": perbaikan.tanggal
                                 });
                                 

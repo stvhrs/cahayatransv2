@@ -46,8 +46,8 @@ class _TransaksiPageState extends State<TransaksiPage> {
      listTransaksi = await Service.getAllTransaksi();
     // Provider.of<ProviderData>(context, listen: false)
     //     .searchTransaksi("", false);
-    // Provider.of<ProviderData>(context, listen: false)
-    //     .setData([], listTransaksi, false, [], [], [], [], []);
+     Provider.of<ProviderData>(context, listen: false)
+         .setData([], listTransaksi, false, [], [], [], [], []);
 
     loading = false;
 

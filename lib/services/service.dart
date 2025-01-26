@@ -337,14 +337,14 @@ class Service {
           '$base/perbaikan',
         ),
       );
-
-      if (response.body.isNotEmpty) {
+      log(data.toString());
+log(response.body.toString());
+     
         return Perbaikan.fromMap(
-          json.decode(response.body)["0"],
-        );
-      } else {
-        return null;
-      }
+          json.decode(response.body)["0"]); 
+        
+    
+      
     } catch (e) {
       return null;
     }
