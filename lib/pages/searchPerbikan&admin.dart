@@ -11,10 +11,12 @@ State<SearchP> createState() => _SearchPState();
 
 
 class _SearchPState extends State<SearchP> {
-  String _selecteRange = 'Pilih Rentang';
+
   DateTimeRange? picked;
   @override
   Widget build(BuildContext context) {
+  var prov  =  context.watch<ProviderData>();
+
     return Card(
       color: Colors.grey.shade200,
       child: Row(
@@ -23,7 +25,7 @@ class _SearchPState extends State<SearchP> {
             const Icon(Icons.date_range_rounded,size: 25),
             InkWell(
               child: Text(
-                _selecteRange,
+                prov.rentangPerbaikan,
               ),
               onTap: () async {
                 dateTimeRangePicker() async {
@@ -57,37 +59,39 @@ class _SearchPState extends State<SearchP> {
                       });
          
                   if (picked != null) {
-                    _selecteRange = FormatTanggal.formatTanggal(
+                             prov.setrentangperbaikan=FormatTanggal.formatTanggal(
                             picked!.start.toIso8601String()) +
                         ' - ' +
                         FormatTanggal.formatTanggal(
                             picked!.end.toIso8601String());
-                    Provider.of<ProviderData>(context, listen: false).startp =
-                        picked!.start;
-                    Provider.of<ProviderData>(context, listen: false).endp =
-                        picked!.end;
-                    Provider.of<ProviderData>(context, listen: false)
-                        .sortp();
-                    setState(() {});
+                               Provider.of<ProviderData>(context, listen: false).startp =
+                          picked!.start;
+                      Provider.of<ProviderData>(context, listen: false).endp =
+                                                    picked!.end;
+;
+                     
                   }
+                
 
                 }
 
                 dateTimeRangePicker();
               },
             ),
-            _selecteRange == 'Pilih Rentang'
+            prov.rentangPerbaikan
+ == 'Pilih Rentang'
                 ? IconButton(onPressed: (){}, icon: const Icon(Icons.r_mobiledata,color: Colors.transparent,))
                 : IconButton(
                     onPressed: () {
                       picked = null;
-                      _selecteRange = 'Pilih Rentang';
+                      prov.rentangPerbaikan = 'Pilih Rentang';
                       Provider.of<ProviderData>(context, listen: false).startp =
                           null;
                       Provider.of<ProviderData>(context, listen: false).endp =
                           null;
-                      Provider.of<ProviderData>(context, listen: false)
-                          .sortp();
+                     
+                           Provider.of<ProviderData>(context, listen: false)
+                          .searchperbaikan("",true);
                       setState(() {});
                     },
                     icon: const Icon(

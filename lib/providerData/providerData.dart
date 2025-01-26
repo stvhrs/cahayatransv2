@@ -80,7 +80,7 @@ class ProviderData with ChangeNotifier {
 
   DateTime? startp;
   DateTime? endp;
-  String keywordPerbaikan="";
+  TextEditingController keywordPerbaikan=TextEditingController(text: "");
   void sortp() {
     listPerbaikan.clear();
 
@@ -94,7 +94,7 @@ class ProviderData with ChangeNotifier {
         }
       }
       if (!skipped) {
-        if(keywordPerbaikan.isNotEmpty&&element.mobil.toLowerCase().startsWith(keywordPerbaikan.toLowerCase())){
+        if(keywordPerbaikan.text.isNotEmpty&&element.mobil.toLowerCase().startsWith(keywordPerbaikan.text.toLowerCase())){
         listPerbaikan.add(element);
 
         }
@@ -452,6 +452,12 @@ class ProviderData with ChangeNotifier {
   TextEditingController tujuanConttoler = TextEditingController();
 
   String rentangTransaksi = "Pilih Rentang";
+  String rentangPerbaikan = "Pilih Rentang";
+set setrentangperbaikan(v){
+   rentangPerbaikan = v;
+   notifyListeners();
+
+}
   String searchmobile = '';
   String searchsupir = '';
   String searchtujuan = '';
@@ -602,7 +608,13 @@ class ProviderData with ChangeNotifier {
   }
 
   void searchperbaikan(String val, bool listen) {
-    keywordPerbaikan=val;
+     if (val.isEmpty) {
+      listPerbaikan.clear();
+      listPerbaikan.addAll(backupListPerbaikan);
+      keywordPerbaikan.clear();
+ listen ? notifyListeners() : '';      return;
+    }
+    keywordPerbaikan.text=val;
     for (var data in listPerbaikan) {
       data.mobil = backupListMobil
           .firstWhere((element) => element.id == data.id_mobil)

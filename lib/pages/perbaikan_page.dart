@@ -49,15 +49,15 @@ class _PerbaikanPageState extends State<PerbaikanPage> {
   void initState() {
     if (mounted) {
       initData();
-    }    Provider.of<ProviderData>(context, listen: false)
+    }
+    Provider.of<ProviderData>(context, listen: false)
         .searchperbaikan('', false);
-     Provider.of<ProviderData>(context, listen: false).startp = null;
+    Provider.of<ProviderData>(context, listen: false).startp = null;
     Provider.of<ProviderData>(context, listen: false).endp = null;
 
     Provider.of<ProviderData>(context, listen: false).searchMobil('', false);
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +66,9 @@ class _PerbaikanPageState extends State<PerbaikanPage> {
             child: CustomPaints(),
           )
         : Consumer<ProviderData>(builder: (context, c, h) {
-          List<Perbaikan> data=c.listPerbaikan;
+            List<Perbaikan> data = c.listPerbaikan;
 
             data = c.listPerbaikan
-
                 .where((element) => element.adminitrasi == false)
                 .toList();
             data.sort((a, b) =>
@@ -112,11 +111,12 @@ class _PerbaikanPageState extends State<PerbaikanPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Expanded(
-                            flex: 1,
+                            flex: 2,
                             child: Container(
-                              margin: const EdgeInsets.only(bottom: 5),
+                              margin: const EdgeInsets.symmetric(horizontal: 5),
                               height: MediaQuery.of(context).size.height / 20,
                               child: TextFormField(
+                                controller: c.keywordPerbaikan,
                                 style: const TextStyle(fontSize: 13),
                                 textInputAction: TextInputAction.next,
                                 decoration:
@@ -124,13 +124,60 @@ class _PerbaikanPageState extends State<PerbaikanPage> {
                                 onChanged: (val) {
                                   Provider.of<ProviderData>(context,
                                           listen: false)
-                                      .searchperbaikan(val.toLowerCase(), true);
+                                      .keywordPerbaikan
+                                      .text = val;
                                 },
                               ),
                             ),
                           ),
-                          Expanded(flex: 2,child: SearchP()),
-                          const Expanded(flex: 4, child: SizedBox()),
+                          Expanded(flex: 4, child: SearchP()),
+                          Expanded(
+                              flex: 3,
+                              child: Container(
+                                  margin: EdgeInsets.only(left: 20),
+                                  child: ElevatedButton.icon(
+                                      label: Text(
+                                        "Terapkan Filter",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onPressed: () {
+                                        Provider.of<ProviderData>(context,
+                                                listen: false)
+                                            .searchperbaikan(
+                                                c.keywordPerbaikan.text, true);
+                                      },
+                                      icon: Icon(
+                                        Icons.search,
+                                        color: Colors.white,
+                                      )))),
+                          Expanded(
+                              flex: 3,
+                              child: Container(
+                                  margin: EdgeInsets.only(left: 20),
+                                  child: ElevatedButton.icon(
+                                      label: Text(
+                                        "Reset",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onPressed: () {
+                      c.rentangPerbaikan = 'Pilih Rentang';
+
+                                       Provider.of<ProviderData>(context,
+                                                listen: false)
+                                            .startp = null;
+                                        Provider.of<ProviderData>(context,
+                                                listen: false)
+                                            .endp = null;
+                                        Provider.of<ProviderData>(context,
+                                                listen: false)
+                                            .searchperbaikan("", true);
+                                       
+                                      },
+                                      icon: Icon(
+                                        Icons.search,
+                                        color: Colors.white,
+                                      )))),
+                                      Expanded(flex: 3,child: SizedBox()),
                           Padding(
                             padding: const EdgeInsets.only(right: 20),
                             child: ElevatedButton.icon(
@@ -211,7 +258,8 @@ class _PerbaikanPageState extends State<PerbaikanPage> {
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.7,
                           child: ListView.builder(
-                            itemCount: data.length,primary: true,
+                            itemCount: data.length,
+                            primary: true,
                             itemBuilder: (context, index) => InkWell(
                               child: Container(
                                 color: index.isEven
