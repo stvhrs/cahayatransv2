@@ -80,6 +80,7 @@ class ProviderData with ChangeNotifier {
 
   DateTime? startp;
   DateTime? endp;
+  String keywordPerbaikan="";
   void sortp() {
     listPerbaikan.clear();
 
@@ -93,7 +94,10 @@ class ProviderData with ChangeNotifier {
         }
       }
       if (!skipped) {
+        if(keywordPerbaikan.isNotEmpty&&element.mobil.toLowerCase().startsWith(keywordPerbaikan.toLowerCase())){
         listPerbaikan.add(element);
+
+        }
       }
     }
     notifyListeners();
@@ -598,6 +602,7 @@ class ProviderData with ChangeNotifier {
   }
 
   void searchperbaikan(String val, bool listen) {
+    keywordPerbaikan=val;
     for (var data in listPerbaikan) {
       data.mobil = backupListMobil
           .firstWhere((element) => element.id == data.id_mobil)
@@ -612,6 +617,7 @@ class ProviderData with ChangeNotifier {
               element.mobil.toLowerCase().startsWith(val.toLowerCase()))
           .toList();
     }
+    sortp();
     listen ? notifyListeners() : '';
   }
 
