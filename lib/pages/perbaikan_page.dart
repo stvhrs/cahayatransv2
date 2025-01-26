@@ -174,7 +174,7 @@ class _PerbaikanPageState extends State<PerbaikanPage> {
                                        
                                       },
                                       icon: Icon(
-                                        Icons.search,
+                                        Icons.restart_alt,
                                         color: Colors.white,
                                       )))),
                                       Expanded(flex: 3,child: SizedBox()),
