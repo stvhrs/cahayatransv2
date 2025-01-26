@@ -56,7 +56,6 @@ class _AdministrasiPageState extends State<AdministrasiPage> {
     super.initState();
   }
 
-  List<Perbaikan> data = [];
   @override
   Widget build(BuildContext context) {
     return loading == true
@@ -64,9 +63,17 @@ class _AdministrasiPageState extends State<AdministrasiPage> {
             child: CustomPaints(),
           )
         : Consumer<ProviderData>(builder: (context, c, h) {
-            data = c.listPerbaikan
-                .where((element) => element.adminitrasi == true)
-                .toList();
+  List<Perbaikan> data = [];
+
+          ;
+               
+              
+                  for (var element in c.listPerbaikan) {
+                    if (element.adminitrasi) {
+                      data.add(element);
+                    }
+                  } 
+           
             data.sort((a, b) =>
                 DateTime.parse(b.tanggal).compareTo(DateTime.parse(a.tanggal)));
 
@@ -220,15 +227,15 @@ class _AdministrasiPageState extends State<AdministrasiPage> {
                                     Expanded(
                                         flex: 11,
                                         child: Text(FormatTanggal.formatTanggal(
-                                            data.toList()[index].tanggal))),
+                                            data[index].tanggal))),
                                     Expanded(
                                         flex: 11,
                                         child:
-                                            Text(data.toList()[index].mobil)),
+                                            Text(data[index].mobil)),
                                     Expanded(
                                         flex: 11,
                                         child:
-                                            Text(data.toList()[index].jenis)),
+                                            Text(data[index].jenis)),
                                     Expanded(
                                         flex: 11,
                                         child: Container(
@@ -245,19 +252,19 @@ class _AdministrasiPageState extends State<AdministrasiPage> {
                                     Expanded(
                                         flex: 20,
                                         child: Text(
-                                            data.toList()[index].keterangan)),
+                                            data[index].keterangan)),
                                     Expanded(
                                         flex: 2,
                                         child:
                                             Provider.of<ProviderData>(context)
                                                     .isOwner
                                                 ? AdministrasiDelete(
-                                                    data.toList()[index])
+                                                    data[index])
                                                 : const SizedBox()),
                                     Expanded(
                                         flex: 2,
                                         child: AdministrasiEdit(
-                                            data.toList()[index]))
+                                            data[index]))
                                   ],
                                 ),
                               ),

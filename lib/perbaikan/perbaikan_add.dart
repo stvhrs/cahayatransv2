@@ -667,6 +667,7 @@ mobilCont.text="";
 
                                                   for (var element
                                                       in bulkperbaikan) {
+                                                        log(element.tanggal.toString());
                                                     var data = await Service
                                                         .postPerbaikan({
                                                       "id_perbaikan":
@@ -683,7 +684,7 @@ mobilCont.text="";
                                                       "ket_p":
                                                           element.keterangan,
                                                       "tgl_p":
-                                                          perbaikan.tanggal,
+                                                          element.tanggal,
                                                       "administrasi": widget.isPerbaikan?"false":"true"
                                                     });
 
