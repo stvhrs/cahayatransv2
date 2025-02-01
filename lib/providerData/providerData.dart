@@ -66,8 +66,8 @@ class ProviderData with ChangeNotifier {
       bool skipped = false;
 
       if (startTl != null) {
-        if (DateTime.parse(element.tanggal).isBefore(startTl!) ||
-            DateTime.parse(element.tanggal).isAfter(endTl!)) {
+        if (DateTime.parse(element.tanggal).isBefore(startTl!.copyWith(hour: 0,minute: 1) ) ||
+            DateTime.parse(element.tanggal).isAfter(endTl!.copyWith(hour: 24,minute: 0))) {
           skipped = true;
         }
       }
@@ -88,13 +88,13 @@ class ProviderData with ChangeNotifier {
       bool skipped = false;
 
       if (startp != null) {
-        if (DateTime.parse(element.tanggal).isBefore(startp!) ||
-            DateTime.parse(element.tanggal).isAfter(endp!)) {
+        if (DateTime.parse(element.tanggal).isBefore(startp!.copyWith(hour: 0,minute: 1) ) ||
+            DateTime.parse(element.tanggal).isAfter(endp!.copyWith(hour: 24,minute: 0))) {
           skipped = true;
         }
       }
       if (!skipped) {
-        if(keywordPerbaikan.text.isNotEmpty&&element.mobil.toLowerCase().startsWith(keywordPerbaikan.text.toLowerCase())){
+        if(element.mobil.toLowerCase().startsWith(keywordPerbaikan.text.toLowerCase())){
         listPerbaikan.add(element);
 
         }
@@ -473,8 +473,8 @@ set setrentangperbaikan(v){
       bool skipped = false;
 
       if (startMutasi != null) {
-        if (DateTime.parse(element.tanggal).isBefore(startMutasi!) ||
-            DateTime.parse(element.tanggal).isAfter(endMutasi!)) {
+        if (DateTime.parse(element.tanggal).isBefore(startMutasi!.copyWith(hour: 0,minute: 1) ) ||
+            DateTime.parse(element.tanggal).isAfter(endMutasi!.copyWith(hour: 24,minute: 0))) {
           skipped = true;
         }
       }
@@ -559,8 +559,8 @@ set setrentangperbaikan(v){
         return false;
       }
       if (start != null &&
-          (tanggalBerangkat!.isBefore(start!) ||
-              tanggalBerangkat.isAfter(end!))) {
+          (tanggalBerangkat!.isBefore(start!.copyWith(hour: 0,minute: 1) ) ||
+              tanggalBerangkat.isAfter(end!.copyWith(hour: 24,minute: 0)))) {
         return false;
       }
       if (searchPerbaikan) {
@@ -612,6 +612,8 @@ set setrentangperbaikan(v){
       listPerbaikan.clear();
       listPerbaikan.addAll(backupListPerbaikan);
       keywordPerbaikan.clear();
+    sortp();
+
  listen ? notifyListeners() : '';      return;
     }
     keywordPerbaikan.text=val;

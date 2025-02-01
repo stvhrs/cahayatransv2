@@ -207,7 +207,7 @@ class _AdministrasiPageState extends State<AdministrasiPage> {
                                   ));
                                 }),
                           ),
-                          PerbaikanAdd(true)
+                          PerbaikanAdd(false)
                         ],
                       ),
                       Container(

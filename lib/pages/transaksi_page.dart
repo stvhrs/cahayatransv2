@@ -348,13 +348,14 @@ class _CustomPaginatedTableState extends State<CustomPaginatedTable> {
       
 
   }
-
-  List<Transaksi> get _currentPageData {
+List<Transaksi> get _currentPageData {
     final startIndex = _currentPage * widget.rowsPerPage;
-    final endIndex =
-        (startIndex + widget.rowsPerPage).clamp(0, widget.data.length);
+    if (startIndex >= widget.data.length) return []; // Hindari RangeError
+
+    final endIndex = (startIndex + widget.rowsPerPage).clamp(0, widget.data.length);
     return widget.data.sublist(startIndex, endIndex);
   }
+
 
   void _goToPage(int pageIndex) {
     setState(() {
@@ -396,7 +397,7 @@ class _CustomPaginatedTableState extends State<CustomPaginatedTable> {
                 padding: EdgeInsets.symmetric(horizontal: 8),
                 color: index.isEven ? Colors.grey.shade300 : Colors.white,
                 child: Row(children: [
-                  Expanded(flex: 1, child: Text(" " + (index + 1+_currentPageData.length *(_currentPage + 1)-10).toString())),
+                  Expanded(flex: 1, child: Text(" " + (_currentPage * widget.rowsPerPage + index + 1).toString())),
                   Expanded(
                       flex: 4,
                       child: Text(
@@ -475,7 +476,7 @@ class _CustomPaginatedTableState extends State<CustomPaginatedTable> {
                   _currentPage > 0 ? () => _goToPage(_currentPage - 1) : null,
               icon: const Icon(Icons.arrow_back),
             ),
-             Text('${_currentPageData.length *(_currentPage + 1) }' " dari "+ widget.data.length.toString()),
+             Text('${(_currentPage * widget.rowsPerPage + _currentPageData.length).clamp(0, widget.data.length)}' " dari "+ widget.data.length.toString()),
             // Text('Page ${_currentPage + 1} of $_totalPages'),
             IconButton(
               onPressed: _currentPage < _totalPages - 1
